@@ -91,7 +91,7 @@ root.attributes('-alpha',1)
 
 root.attributes('-topmost', 0)
 
-root.iconphoto(False, tk.PhotoImage(file='/home/zorin/Dokumente/Programmieren/encrypt_29199.png'))
+#root.iconphoto(False, tk.PhotoImage(file='/home/zorin/Dokumente/Programmieren/encrypt_29199.png'))
 
 def openHelpWindow():
     help = tk.Tk() 
