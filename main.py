@@ -56,7 +56,7 @@ def encrypt():
     with open(FileName, "wb") as encrypted_out:
         encrypted_out.write(encrypted)
 
-#class Decrypt(object):
+
 def decrypt(filename, key):
     file = open(filename, "rb").read()
     key = open(key, "rb").read()
@@ -66,8 +66,7 @@ def decrypt(filename, key):
 
 
 
-def select_key():
-    print('Key zur entschlüsselung auswählen')
+#def select_key():
 
 root = tk.Tk()
 
