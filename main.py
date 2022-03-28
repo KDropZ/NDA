@@ -66,7 +66,8 @@ def decrypt(filename, key):
 
 
 
-#def select_key():
+def select_key():
+    print("test")
 
 root = tk.Tk()
 
