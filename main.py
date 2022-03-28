@@ -1,3 +1,4 @@
+from telnetlib import ENCRYPT
 import tkinter as tk
 from tkinter import ttk
 import tkinter.font as font
@@ -7,63 +8,63 @@ from tkinter.messagebox import showinfo
 from turtle import bgcolor
 import os
 
-class Select_file_en(object):
-    def select_file_en():
-        filetypes = (
-            ('All files', '*.*'),       
+
+def select_file_en():
+    filetypes = (
+        ('All files', '*.*'),       
         )
 
-        filename = fd.askopenfilename(
-            title='Choose a file to encrypt',
-            initialdir='/',
-            filetypes=filetypes)
+    filename = fd.askopenfilename(
+        title='Choose a file to encrypt',
+        initialdir='/',
+        filetypes=filetypes)
 
-        showinfo(
-            title='Selected File',
-            message=filename
+    showinfo(
+        title='Selected File',
+        message=filename
         )
-        FileName = filename
-        return FileName
+    FileName = filename
+    return FileName
     
-class Select_file_de(object):
-    def select_file_de():
-        filetypes = ( 
-            ('All files', '*.*'),               
-        )
+def select_file_de():
+    filetypes = ( 
+        ('All files', '*.*'),               
+    )
 
-        filename = fd.askopenfilename(
-            title='Choose a file to decrypt',
-            initialdir='/',
-            filetypes=filetypes)
+    filename = fd.askopenfilename(
+        title='Choose a file to decrypt',
+        initialdir='/',
+        filetypes=filetypes)
 
-        showinfo(
-            title='Selected File',
-            message=filename
-        )
-        FileName = filename
-        return FileName
+    showinfo(
+        title='Selected File',
+        message=filename
+    )
+    return filename
 
-class Encrypt(object):
-    def encrypt():
-        FileName = None
-        FileName = Select_file_en(FileName)
-        to_encrypt = open(FileName, "rb").read()
-        size = len(to_encrypt)
-        key = os.urandom(size)
-        with open(FileName + ".key", "wb") as key_out:
-            key_out.write(key)
-            encrypted = bytes(a^b for (a,b) in zip(FileName, key))
-        with open(FileName, "wb") as encrypted_out:
-            encrypted_out.write(encrypted)
 
-class Decrypt(object):
-    def decrypt(filename, key):
-        print('Entschlüsseln starten')
-        file = open(filename, "rb").read()
-        key = open(key, "rb").read()
-        decrypted = bytes(a^b for (a,b) in zip(file, key))
-        with open("de_" + filename, "wb") as decrypted_out:
-            decrypted_out.write(decrypted)
+
+def encrypt():
+    FileName = None
+    FileName = select_file_en(FileName)
+    to_encrypt = open(FileName, "rb").read()
+    size = len(to_encrypt)
+    key = os.urandom(size)
+    with open(FileName + ".key", "wb") as key_out:
+        key_out.write(key)
+        encrypted = bytes(a^b for (a,b) in zip(FileName, key))
+    with open(FileName, "wb") as encrypted_out:
+        encrypted_out.write(encrypted)
+
+#class Decrypt(object):
+def decrypt(filename, key):
+    file = open(filename, "rb").read()
+    key = open(key, "rb").read()
+    decrypted = bytes(a^b for (a,b) in zip(file, key))
+    with open("de_" + filename, "wb") as decrypted_out:
+        decrypted_out.write(decrypted)
+
+
 
 def select_key():
     print('Key zur entschlüsselung auswählen')
@@ -91,7 +92,7 @@ root.attributes('-alpha',1)
 
 root.attributes('-topmost', 0)
 
-#root.iconphoto(False, tk.PhotoImage(file='/home/zorin/Dokumente/Programmieren/encrypt_29199.png'))
+root.iconphoto(False, tk.PhotoImage(file='/home/zorin/Dokumente/Programmieren/encrypt_29199.png'))
 
 def openHelpWindow():
     help = tk.Tk() 
@@ -121,7 +122,7 @@ def openHelpWindow():
     ).pack(ipadx='0', ipady='0')
 
     textBox = tk.Entry(help)
-    textBox.insert(0, "XXX@XXX.de")
+    textBox.insert(0, "alkoholfreiesradler@outlook.de")
     textBox.configure(state='readonly', readonlybackground='#ff7b7b', relief='sunken')
     textBox.pack(ipadx='22')
 
@@ -132,24 +133,24 @@ root.rowconfigure(3, weight=1)
 
 buttonFont = font.Font(family='Helvetica', size=12, weight='bold')
 
-tk.Button(root, cursor='hand2', text='Select file to encrypt', bg='#FF6D6D', fg='#ffffff', command=Select_file_en.select_file_en).place(anchor='nw', relx='0.25', rely='0.12', x='0', y='0')
+tk.Button(root, cursor='hand2', text='Select file to encrypt', bg='#FF6D6D', fg='#ffffff', command=select_file_en).place(anchor='nw', relx='0.25', rely='0.12', x='0', y='0')
 
-tk.Button(root, cursor='hand2', text='Encrypt file', font=buttonFont, bg='#FF6D6D', fg='#ffffff', command=Encrypt.encrypt).place(anchor='nw', relx='0.78', rely='0.12', x='0', y='0')
+tk.Button(root, cursor='hand2', text='Encrypt file', font=buttonFont, bg='#FF6D6D', fg='#ffffff', command=encrypt).place(anchor='nw', relx='0.78', rely='0.12', x='0', y='0')
 
 ttk.Separator(root, orient='horizontal').place(anchor='nw', relheight='0.02', relwidth='1.0', relx='0.0', rely='0.30', y='0') #bg='#ff7b7b'
 
-tk.Button(root, cursor='hand2', text='Select file to decrypt', bg='#FF6D6D', fg='#ffffff', command=Select_file_de.select_file_de).place(anchor='nw', relx='0.25', rely='0.4', x='0', y='0')
+tk.Button(root, cursor='hand2', text='Select file to decrypt', bg='#FF6D6D', fg='#ffffff', command=select_file_de).place(anchor='nw', relx='0.25', rely='0.4', x='0', y='0')
 
 tk.Button(root, cursor='hand2', text='Select key', bg='#FF6D6D', fg='#ffffff', command=select_key).place(anchor='nw', relx='0.57', rely='0.4', x='0', y='0')
 
-tk.Button(root, cursor='hand2', text='Decrypt file', font=buttonFont, bg='#FF6D6D', fg='#ffffff', command=Decrypt.decrypt).place(anchor='nw', relx='0.78', rely='0.4', x='0', y='0')
+tk.Button(root, cursor='hand2', text='Decrypt file', font=buttonFont, bg='#FF6D6D', fg='#ffffff', command=decrypt).place(anchor='nw', relx='0.78', rely='0.4', x='0', y='0')
 
 ttk.Label(root, background='#ff7b7b', text='v 0.1').grid(column='1', row='6')
 
 tk.Button(root, background='#ff7b7b', text='Help', command=openHelpWindow).grid(column='4', row='6') 
 
 textBox = tk.Entry(root)
-textBox.insert(0, "XXX@XXX.de")
+textBox.insert(0, "alkoholfreiesradler@outlook.de")
 textBox.configure(state='readonly', readonlybackground='#ff7b7b', relief='sunken')
 textBox.grid(column='3', row='6', ipadx='22')
 
