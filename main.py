@@ -1,13 +1,9 @@
-from telnetlib import ENCRYPT
 import tkinter as tk
 from tkinter import ttk
 import tkinter.font as font
-from tkinter import WORD
 from tkinter import filedialog as fd
 from tkinter.messagebox import showinfo
-from turtle import bgcolor
 import os
-
 
 def select_file_en():
     filetypes = (
