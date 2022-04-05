@@ -23,8 +23,6 @@ def select_file_en():
         title='Selected File',
         message=filename
         )
-    FileName = filename
-    return FileName
     
 def select_file_de():
     filetypes = ( 
@@ -40,20 +38,15 @@ def select_file_de():
         title='Selected File',
         message=filename
     )
-    return filename
 
-
-
-def encrypt():
-    FileName = None
-    FileName = select_file_en(FileName)
-    to_encrypt = open(FileName, "rb").read()
+def encrypt(filename):
+    to_encrypt = open(filename, "rb").read()
     size = len(to_encrypt)
     key = os.urandom(size)
-    with open(FileName + ".key", "wb") as key_out:
+    with open(filename + ".key", "wb") as key_out:
         key_out.write(key)
-        encrypted = bytes(a^b for (a,b) in zip(FileName, key))
-    with open(FileName, "wb") as encrypted_out:
+        encrypted = bytes(a^b for (a,b) in zip(filename, key))
+    with open(filename, "wb") as encrypted_out:
         encrypted_out.write(encrypted)
 
 
