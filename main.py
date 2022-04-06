@@ -5,6 +5,7 @@ import tkinter.font as font
 from tkinter import filedialog as fd
 from tkinter.messagebox import showinfo
 import os
+import sys
 
 
 def select_file_en():
@@ -99,7 +100,8 @@ root.attributes('-alpha',1)
 
 root.attributes('-topmost', 0)
 
-root.iconphoto(False, tk.PhotoImage(file='/home/zorin/Dokumente/Programmieren/encrypt_29199.png'))
+program_directory=sys.path[0]
+root.iconphoto(True, tk.PhotoImage(file=os.path.join(program_directory, "favicon.png")))
 
 def openHelpWindow():
     help = tk.Tk() 
