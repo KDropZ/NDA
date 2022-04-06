@@ -1,3 +1,4 @@
+from fileinput import filename
 import tkinter as tk
 from tkinter import ttk
 import tkinter.font as font
@@ -5,7 +6,9 @@ from tkinter import filedialog as fd
 from tkinter.messagebox import showinfo
 import os
 
+
 def select_file_en():
+    global en_filename
     filetypes = (
         ('All files', '*.*'),       
         )
@@ -19,8 +22,10 @@ def select_file_en():
         title='Selected File',
         message=filename
         )
-    
+    en_filename = filename
+      
 def select_file_de():
+    global de_filename
     filetypes = ( 
         ('All files', '*.*'),               
     )
@@ -34,29 +39,42 @@ def select_file_de():
         title='Selected File',
         message=filename
     )
-
-def encrypt(filename):
-    to_encrypt = open(filename, "rb").read()
-    size = len(to_encrypt)
-    key = os.urandom(size)
-    with open(filename + ".key", "wb") as key_out:
-        key_out.write(key)
-        encrypted = bytes(a^b for (a,b) in zip(filename, key))
-    with open(filename, "wb") as encrypted_out:
-        encrypted_out.write(encrypted)
-
-
-def decrypt(filename, key):
-    file = open(filename, "rb").read()
-    key = open(key, "rb").read()
-    decrypted = bytes(a^b for (a,b) in zip(file, key))
-    with open("de_" + filename, "wb") as decrypted_out:
-        decrypted_out.write(decrypted)
-
-
+    de_filename = filename
 
 def select_key():
-    print("test")
+    global de_key
+    filetypes = ( 
+        ('All files', '*.*'),               
+    )
+
+    key = fd.askopenfilename(
+        title='Choose a file to decrypt',
+        initialdir='/',
+        filetypes=filetypes)
+
+    showinfo(
+        title='Selected File',
+        message=key
+    )
+    de_key = key
+
+def encrypt(en_filename):
+    to_encrypt = open(en_filename, "rb").read()
+    size = len(to_encrypt)
+    key = os.urandom(size)
+    with open(en_filename + ".key", "wb") as key_out:
+        key_out.write(key)
+        encrypted = bytes(a^b for (a,b) in zip(to_encrypt, key))
+    with open(en_filename, "wb") as encrypted_out:
+        encrypted_out.write(encrypted)
+
+def decrypt(de_filename, de_key):
+    file = open(de_filename, "rb").read()
+    key = open(de_key, "rb").read()
+    decrypted = bytes(a^b for (a,b) in zip(file, key))
+    with open(de_filename, "wb") as decrypted_out:
+        decrypted_out.write(decrypted)
+
 
 root = tk.Tk()
 
@@ -124,7 +142,7 @@ buttonFont = font.Font(family='Helvetica', size=12, weight='bold')
 
 tk.Button(root, cursor='hand2', text='Select file to encrypt', bg='#FF6D6D', fg='#ffffff', command=select_file_en).place(anchor='nw', relx='0.25', rely='0.12', x='0', y='0')
 
-tk.Button(root, cursor='hand2', text='Encrypt file', font=buttonFont, bg='#FF6D6D', fg='#ffffff', command=encrypt).place(anchor='nw', relx='0.78', rely='0.12', x='0', y='0')
+tk.Button(root, cursor='hand2', text='Encrypt file', font=buttonFont, bg='#FF6D6D', fg='#ffffff', command= lambda: encrypt(en_filename)).place(anchor='nw', relx='0.78', rely='0.12', x='0', y='0')
 
 ttk.Separator(root, orient='horizontal').place(anchor='nw', relheight='0.02', relwidth='1.0', relx='0.0', rely='0.30', y='0') #bg='#ff7b7b'
 
@@ -132,7 +150,7 @@ tk.Button(root, cursor='hand2', text='Select file to decrypt', bg='#FF6D6D', fg=
 
 tk.Button(root, cursor='hand2', text='Select key', bg='#FF6D6D', fg='#ffffff', command=select_key).place(anchor='nw', relx='0.57', rely='0.4', x='0', y='0')
 
-tk.Button(root, cursor='hand2', text='Decrypt file', font=buttonFont, bg='#FF6D6D', fg='#ffffff', command=decrypt).place(anchor='nw', relx='0.78', rely='0.4', x='0', y='0')
+tk.Button(root, cursor='hand2', text='Decrypt file', font=buttonFont, bg='#FF6D6D', fg='#ffffff', command= lambda: decrypt(de_filename, de_key)).place(anchor='nw', relx='0.78', rely='0.4', x='0', y='0')
 
 ttk.Label(root, background='#ff7b7b', text='v 0.1').grid(column='1', row='6')
 
