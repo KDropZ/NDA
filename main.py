@@ -131,7 +131,7 @@ def openHelpWindow():
     ).pack(ipadx='0', ipady='0')
 
     textBox = tk.Entry(help)
-    textBox.insert(0, "alkoholfreiesradler@outlook.de")
+    textBox.insert(0, "XX@XX.de")
     textBox.configure(state='readonly', readonlybackground='#ff7b7b', relief='sunken')
     textBox.pack(ipadx='22')
 
@@ -154,12 +154,12 @@ tk.Button(root, cursor='hand2', text='Select key', bg='#FF6D6D', fg='#ffffff', c
 
 tk.Button(root, cursor='hand2', text='Decrypt file', font=buttonFont, bg='#FF6D6D', fg='#ffffff', command= lambda: decrypt(de_filename, de_key)).place(anchor='nw', relx='0.78', rely='0.4', x='0', y='0')
 
-ttk.Label(root, background='#ff7b7b', text='v 0.1').grid(column='1', row='6')
+ttk.Label(root, background='#ff7b7b', text='v 0.2').grid(column='1', row='6')
 
 tk.Button(root, background='#ff7b7b', text='Help', command=openHelpWindow).grid(column='4', row='6') 
 
 textBox = tk.Entry(root)
-textBox.insert(0, "alkoholfreiesradler@outlook.de")
+textBox.insert(0, "XX@XX.de")
 textBox.configure(state='readonly', readonlybackground='#ff7b7b', relief='sunken')
 textBox.grid(column='3', row='6', ipadx='22')
 
