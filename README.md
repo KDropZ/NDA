@@ -1,5 +1,5 @@
 # NDA
-basic tool to encrypt and decrypt single files. Still under construction.
+basic tool to encrypt and decrypt single files. Working, but still under construction.
 
 # Upcoming
 -UI optimization
