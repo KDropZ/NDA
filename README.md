@@ -11,3 +11,5 @@ basic tool to encrypt and decrypt single files. Working, but still under constru
 -create non-portable derivate
 
 -compiled files as release when there is a significant change to the prior version
+
+-increase accessability
